@@ -18,3 +18,9 @@ interface ISwapRouterV3 {
         ExactInputSingleParams calldata params
     ) external payable returns (uint256 amountOut);
 }
+
+/// @notice WETH9 interface
+interface IWETH9Minimal {
+    function deposit() external payable;
+    function approve(address spender, uint256 value) external returns (bool);
+}
