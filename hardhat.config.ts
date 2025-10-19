@@ -16,6 +16,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       type: "edr-simulated",
     },
+    hardhatOp: {
+      type: "edr-simulated",
+      chainType: "op",
+    },
     sepolia: {
       type: "http",
       url: process.env.SEPOLIA_RPC_URL || "",
