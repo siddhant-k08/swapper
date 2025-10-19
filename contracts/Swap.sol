@@ -37,7 +37,7 @@ contract USDTSwapper {
 
     event Swap(address indexed sender, uint256 amountIn, uint256 amountOut);
 
-    constructor(address _swapRouter, address _weth9, address _usdt, uint256 _poolFee) {
+    constructor(address _swapRouter, address _weth9, address _usdt, uint24 _poolFee) {
         require(
             _swapRouter != address(0) && _weth9 != address(0) && _usdt != address(0), "ZERO_ADDRESS"
         );
@@ -67,9 +67,9 @@ contract USDTSwapper {
                 tokenOut: USDT,
                 fee: poolFee,
                 recipient: recipient,
-                deadline: block.timestamp,
+                deadline: block.timestamp + 60,
                 amountIn: amountIn,
-                amountOutMinimum; minOut,
+                amountOutMinimum: minOut,
                 sqrtPriceLimitX96: 0
             })
         );
@@ -78,7 +78,7 @@ contract USDTSwapper {
     }
 
     /// @notice Auto-swap on plain ETH receives and send USDT back to msg.sender
-    recieve() external payable {
+    receive() external payable {
         if (msg.value == 0) return;
         _swapExactETHForUSDTTo(msg.sender, msg.value, 0);
     }
